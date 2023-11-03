@@ -1,4 +1,4 @@
-git_password = "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"
+git_password = "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"
 
 
 
