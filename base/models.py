@@ -27,7 +27,7 @@ class GenericBaseModel(BaseModel):
 
 
 class State(models.Model):
-    id = models.UUIDField(max_length=100, primary_key=True, default=1)
+    id = models.UUIDField(max_length=100, primary_key=True,  default=uuid.uuid4)
     name = models.CharField(max_length=200, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
 
