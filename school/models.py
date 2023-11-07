@@ -8,7 +8,7 @@ class Student(BaseModel):
     user = models.ForeignKey(SpinSchoolUsers, on_delete=models.CASCADE)
     Fees = models.DecimalField(decimal_places=2, max_digits=20)
     Arrears = models.DecimalField(decimal_places=2, max_digits=20, default=0)
-    reg_number = models.CharField(max_length=20,default=000)
+    reg_number = models.CharField(max_length=20, default=000)
 
     class Meta:
         verbose_name = "Student"
@@ -92,6 +92,7 @@ class Grades(BaseModel):
 
 
 class JointStudentSubjectClass(models.Model):
+    Teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, null=True, blank=True)
     Student = models.ForeignKey(Student, on_delete=models.CASCADE)
     Subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
     Classes = models.ForeignKey(Classes, on_delete=models.CASCADE, default=Classes.default_class)
@@ -106,4 +107,4 @@ class StudentScore(BaseModel):
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE, default=Subject.default_subject)
 
     def __str__(self):
-        return '%s - %s' % (self.score, self.students.user.username)
+        return '%s' % self.score

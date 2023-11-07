@@ -51,7 +51,7 @@ class ClassAdminSite(admin.ModelAdmin):
 
 @admin.register(JointStudentSubjectClass)
 class JoinAdminSite(admin.ModelAdmin):
-    list_display = ('Student', 'Subject', 'Classes', 'state')
+    list_display = ('Student', 'Subject', 'Classes', 'state', 'Teacher')
     search_fields = ['Student']
 
 

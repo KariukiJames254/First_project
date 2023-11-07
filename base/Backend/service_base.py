@@ -1,4 +1,3 @@
-
 # -*- coding: utf-8 -*-
 """
 This is the service base from which all CRUD services inherit from.
@@ -120,3 +119,4 @@ class ServiceBase(object):
         except Exception as e:
             pass  # lgr.exception('%sService update exception: %s' % (self.manager.model.__name__, e))
         return None
+

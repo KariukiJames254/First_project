@@ -1,7 +1,7 @@
 from django.forms import model_to_dict
 
-from base.Backend.services import GradesService, JointStudentSubjectClassService, StudentscoreService, SubjectService, \
-    StudentService
+from base.Backend.services import GradesService, StudentscoreService, SubjectService, StudentService, ClassService
+
 from school.models import Student, Grades
 
 
@@ -30,17 +30,32 @@ class AssignGrades(object):
 
     @staticmethod
     def create_grades(**kwargs):
-        student_id = kwargs.get('student_id')
-        subject = kwargs.get('subject')
-        score = kwargs.get('score')
-        student = StudentService().get(id=student_id)
-        student_grade = AssignGrades().generate_grades(score)
-        joint_student_table = JointStudentSubjectClassService().get(student=student)
-        form = joint_student_table.Classes
-        data = StudentscoreService().create(
-            student=student, form=form,
-            grade=GradesService().get(grade=student_grade['data']['grade']),
-            subject=SubjectService().get(name=subject)
-        )
-        print(model_to_dict(data))
+        try:
+            class_id = kwargs.get('class_id')
+            student_id = kwargs.get('student_id')
+            subject = kwargs.get('subject')
+            score = kwargs.get('score')
+            if not score:
+                return {"code": '100.000.008', "message": "Please provide score"}
+            if not subject:
+                return {"code": '100.000.008', "message": "subject not found!"}
+            if not student_id:
+                return {"code": '100.000.008', "message": "Student id not found"}
 
+            student = StudentService().get(id=student_id)
+            student_grade = AssignGrades().generate_grades(score)
+            grade = student_grade['data']['grade']
+            if not grade:
+                return {"code": '100.000.008', "message": "grade not found"}
+
+            form = ClassService().get(id=class_id)
+            data = StudentscoreService().create(
+                students=student, form=form,
+                student_grade=GradesService().get(grade=grade),
+                subject=SubjectService().get(name=subject), score=score
+            )
+            return {"code": "100.000.000", "message": "Success", "data": model_to_dict(data)}
+
+        except Exception as ex:
+            print("Error during creating grades", ex)
+        return {"code": '100.000.008', "message": "Failed"}
