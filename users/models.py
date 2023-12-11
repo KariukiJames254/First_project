@@ -22,4 +22,4 @@ class SpinSchoolUsers(User):
         verbose_name = "SpinSchoolUser"
 
     def __str__(self):
-        return self.username
+        return '%s %s' % (self.first_name, self.last_name)

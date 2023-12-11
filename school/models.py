@@ -8,13 +8,13 @@ class Student(BaseModel):
     user = models.ForeignKey(SpinSchoolUsers, on_delete=models.CASCADE)
     Fees = models.DecimalField(decimal_places=2, max_digits=20)
     Arrears = models.DecimalField(decimal_places=2, max_digits=20, default=0)
-    reg_number = models.CharField(max_length=20, default=000)
+    registration_number = models.CharField(max_length=40, null=True, blank=True)
 
     class Meta:
         verbose_name = "Student"
 
     def __str__(self):
-        return "%s %s" % (self.user.first_name, self.user.last_name)
+        return '%s %s' % (self.user.first_name, self.user.last_name)
 
 
 class Teacher(BaseModel):
@@ -24,7 +24,7 @@ class Teacher(BaseModel):
         verbose_name = "Teacher"
 
     def __str__(self):
-        return "%s %s" % (self.user.first_name, self.user.last_name)
+        return '%s %s' % (self.user.first_name, self.user.last_name)
 
 
 class Classes(GenericBaseModel):

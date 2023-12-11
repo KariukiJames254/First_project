@@ -12,7 +12,7 @@ class BaseModel(models.Model):
         verbose_name = "BaseModel"
 
     def __str__(self):
-        return self.id
+        return str(self.id)
 
 
 class GenericBaseModel(BaseModel):
